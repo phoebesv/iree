@@ -73,6 +73,16 @@ namespace mlir::iree_compiler::IREE::HAL {
 static constexpr char kQueryFunctionName[] =
     "iree_hal_executable_library_query";
 
+static void dumpLLVMIRToPath(StringRef path, StringRef baseName,
+                             StringRef suffix, StringRef extension,
+                             llvm::Module &module) {
+  llvm::SmallVector<char, 0> data;
+  llvm::raw_svector_ostream ostream(data);
+  module.print(ostream, nullptr);
+  dumpDataToPath(path, baseName, suffix, extension,
+                 StringRef(data.data(), data.size()));
+}
+
 static void dumpBitcodeToPath(StringRef path, StringRef baseName,
                               StringRef suffix, StringRef extension,
                               llvm::Module &module) {
@@ -429,6 +439,8 @@ public:
 
     // Dump just the codegen bitcode before linking and optimization.
     if (!options.dumpIntermediatesPath.empty()) {
+      dumpLLVMIRToPath(options.dumpIntermediatesPath, options.dumpBaseName,
+                       variantOp.getName(), ".codegen.ll", *llvmModule);
       dumpBitcodeToPath(options.dumpIntermediatesPath, options.dumpBaseName,
                         variantOp.getName(), ".codegen.bc", *llvmModule);
     }
@@ -517,6 +529,8 @@ public:
 
     // Dump all linked bitcode prior to optimization.
     if (!options.dumpIntermediatesPath.empty()) {
+      dumpLLVMIRToPath(options.dumpIntermediatesPath, options.dumpBaseName,
+                       variantOp.getName(), ".linked.ll", *llvmModule);
       dumpBitcodeToPath(options.dumpIntermediatesPath, options.dumpBaseName,
                         variantOp.getName(), ".linked.bc", *llvmModule);
     }
@@ -542,6 +556,8 @@ public:
 
     // Dump bitcode post-linking and optimization.
     if (!options.dumpIntermediatesPath.empty()) {
+      dumpLLVMIRToPath(options.dumpIntermediatesPath, options.dumpBaseName,
+                       variantOp.getName(), ".optimized.ll", *llvmModule);
       dumpBitcodeToPath(options.dumpIntermediatesPath, options.dumpBaseName,
                         variantOp.getName(), ".optimized.bc", *llvmModule);
     }

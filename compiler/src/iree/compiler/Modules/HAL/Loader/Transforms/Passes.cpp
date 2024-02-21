@@ -94,6 +94,7 @@ void buildHALInlineDynamicTransformPassPipeline(
       IREE::HAL::createSerializeExecutablesPass(
           {&targetRegistry, targetOptions.debugLevel,
            targetOptions.executableIntermediatesPath,
+           targetOptions.executableLLVMIRPath,
            targetOptions.executableBinariesPath}));
 
   // NOTE: symbol DCE will destroy executable target contents.

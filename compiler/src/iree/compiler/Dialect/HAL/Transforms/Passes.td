@@ -346,6 +346,11 @@ def SerializeExecutablesPass :
       "Path to write translated executable intermediates (.bc, .o, etc) into for debugging."
     >,
     Option<
+      "dumpLLVMIRPath", "dump-llvmir-path",
+      "std::string", "",
+      "Path to write translated and serialized executable llvmir (.ll) into for debugging."
+    >,
+    Option<
       "dumpBinariesPath", "dump-binaries-path",
       "std::string", "",
       "Path to write translated and serialized executable binaries into for debugging."
@@ -379,6 +384,11 @@ def SerializeTargetExecutablesPass :
       "dumpIntermediatesPath", "dump-intermediates-path",
       "std::string", "",
       "Path to write translated executable intermediates (.bc, .o, etc) into for debugging."
+    >,
+    Option<
+      "dumpLLVMIRPath", "dump-llvmir-path",
+      "std::string", "",
+      "Path to write translated and serialized executable llvmir (.ll) into for debugging."
     >,
     Option<
       "dumpBinariesPath", "dump-binaries-path",

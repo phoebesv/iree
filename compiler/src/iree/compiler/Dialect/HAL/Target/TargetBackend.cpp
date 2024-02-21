@@ -53,6 +53,8 @@ void TargetOptions::bindOptions(OptionsBinder &binder) {
           executableBenchmarksPath = path;
         if (executableIntermediatesPath.empty())
           executableIntermediatesPath = path;
+        if (executableLLVMIRPath.empty())
+          executableLLVMIRPath = path;
         if (executableBinariesPath.empty())
           executableBinariesPath = path;
       }),
@@ -83,6 +85,11 @@ void TargetOptions::bindOptions(OptionsBinder &binder) {
                           llvm::cl::desc("Path to write translated executable "
                                          "intermediates (.bc, .o, etc) into."),
                           llvm::cl::cat(halTargetOptionsCategory));
+
+  binder.opt<std::string>("iree-hal-dump-llvm-ir-to", executableLLVMIRPath,
+      llvm::cl::desc(
+          "Path to write translated and serialized llvmir (.ll) into."),
+      llvm::cl::cat(halTargetOptionsCategory));
 
   binder.opt<std::string>(
       "iree-hal-dump-executable-binaries-to", executableBinariesPath,

@@ -54,6 +54,9 @@ struct TargetOptions {
   // A path to write executable intermediates into.
   std::string executableIntermediatesPath;
 
+  // A path to write translated and serialized llvmir into.
+  std::string executableLLVMIRPath;
+
   // A path to write translated and serialized executable binaries into.
   std::string executableBinariesPath;
 
@@ -284,6 +287,8 @@ public:
   virtual void buildLinkingPassPipeline(OpPassManager &passManager) {}
 
   struct SerializationOptions {
+    // Optional .
+    bool dumpLLVMModule = false;
     // Debug level for serialization (0-3).
     int debugLevel;
     // File name prefix used when creating scratch files.
@@ -294,6 +299,8 @@ public:
     std::string dumpIntermediatesPath;
     // Optional path to write serialized binary results into.
     std::string dumpBinariesPath;
+    // Optional path to write serialized LLVMIR results into.
+    std::string dumpLLVMIRPath;
   };
 
   // Serializes the given |variantOp| executable produced by this backend to one
